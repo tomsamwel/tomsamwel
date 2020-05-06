@@ -1,0 +1,14 @@
+.vds-definition-list {
+    dt {
+        font-weight: 600;
+        color: $color-black-60;
+    }
+
+    dd {
+        margin-bottom: 1.5rem;
+
+        &:last-child {
+            margin-bottom: 0;
+        }
+    }
+}

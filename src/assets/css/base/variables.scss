@@ -1,0 +1,70 @@
+// font stack
+$font-family-primary: 'Assistant', 'Trebuchet MS', sans-serif;
+$font-family-secondary: 'Crete Round', serif;
+$line-height-base: 1.25;
+
+$font-size-default: 1rem;
+$font-size-s: .8rem;
+$font-size-m: 1.25rem;
+$font-size-l: 1.5rem;
+$font-size-xl: 2.5rem;
+$font-size-xxl: 3rem;
+
+// primary brand colors
+$color-white: #FFF;
+
+$color-black: #141919;
+$color-black-03: #F8F8F8;
+$color-black-20: #D0D1D1;
+$color-black-40: #A1A3A3;
+$color-black-60: #727575;
+$color-black-80: #434747;
+
+$color-yellow: #F0D219;
+$color-yellow-20: #fcf6d1;
+$color-yellow-40: #f9eda3;
+$color-yellow-60: #f6e475;
+$color-yellow-80: #f3db47;
+
+$color-turquoise: #0FD7BE;
+$color-turquoise-20: #cff7f2;
+$color-turquoise-40: #9fefe5;
+$color-turquoise-60: #6fe7d8;
+$color-turquoise-80: #3fdfcb;
+
+$color-red: #DC2850;
+$color-red-20: #f8d4dc;
+$color-red-40: #f1a9b9;
+$color-red-60: #ea7e96;
+$color-red-80: #e35373;
+
+// secondary brand colors
+$color-blue: #1572EA;
+$color-blue-20: #d1e3fb;
+$color-blue-40: #a2c7f7;
+$color-blue-60: #73abf3;
+$color-blue-80: #448fef;
+$color-blue-dark: #3E5573;
+
+$color-purple: #B95FE4;
+$color-purple-20: #f1dffa;
+$color-purple-40: #e3bff4;
+$color-purple-60: #d59fef;
+$color-purple-80: #c77fe9;
+
+$color-orange: #FA9B23;
+$color-orange-20: #feebd3;
+$color-orange-40: #fdd7a7;
+$color-orange-60: #fcc37b;
+$color-orange-80: #fbaf4f;
+
+$color-green: #78D250;
+$color-green-20: #e4f6dc;
+$color-green-40: #c9edb9;
+$color-green-60: #aee496;
+$color-green-80: #93db73;
+
+// breakpoints
+$breakpoint-m: 48rem;
+$breakpoint-l: 64rem;
+$breakpoint-xl: 88rem;

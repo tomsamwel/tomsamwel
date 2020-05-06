@@ -1,0 +1,86 @@
+.vds-app-header {
+    background: $color-yellow;
+    margin-bottom: 1.5rem;
+
+    & > * {
+        display: flex;
+    }
+
+    &__primary {
+        flex-grow: 1;
+
+        i {
+            @media (min-width: $breakpoint-l) {
+                margin-right: .5rem;
+            }
+        }
+    }
+
+    // &__utility {
+    // }
+
+    &__nav-items {
+        display: flex;
+        justify-content: flex-start;
+        padding: 0;
+        margin: 0;
+    }
+
+    &__nav-item {
+        margin: 0;
+        padding: 0;
+        list-style-type: none;
+        font-weight: 600;
+        margin-right: .5rem;
+
+        &--active {
+            background: lighten($color-yellow, 12);
+        }
+
+        &:last-child {
+            margin-right: 0;
+        }
+
+        a {
+            display: block;
+            color: $color-black;
+            padding: 1rem .5rem;
+            text-decoration: none;
+
+            &:hover {
+                background: darken($color-yellow, 4);
+            }
+
+            span {
+                display: none;
+
+                @media (min-width: $breakpoint-l) {
+                    display: inline;
+                }
+            }
+        }
+
+        i {
+            background-color: $color-black;
+            margin: 0;
+        }
+    }
+
+    &__search {
+        background-color: $color-yellow;
+        border-color: $color-black;
+        color: $color-black;
+        margin-top: .5rem;
+        width: 88px;
+        transition: width ease-in-out .1s;
+
+        &:focus {
+            width: 288px;
+            box-shadow: 0 0 0 0.25rem $color-yellow-80;
+        }
+
+        &::placeholder {
+            color: white;
+        }
+    }
+}

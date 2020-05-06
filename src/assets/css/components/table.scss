@@ -1,0 +1,96 @@
+.vds-table {
+    border-collapse: collapse;
+    width: 100%;
+    margin-bottom: 1.5rem;
+    display: block;
+    overflow-x: auto;
+    white-space: nowrap;
+
+    @media (min-width: $breakpoint-l) {
+        display: table;
+        white-space: normal;
+        overflow-x: unset;
+    }
+
+    th,
+    td {
+        padding: 0.75rem 1rem;
+        text-align: left;
+    }
+
+    &--compact {
+        th,
+        td {
+            padding: 0.5rem 0.25rem;
+        }
+    }
+
+    &--tight {
+        th,
+        td {
+            padding: 0.25rem;
+        }
+    }
+
+    thead td,
+    th {
+        font-size: $font-size-s;
+        text-transform: uppercase;
+        color: $color-black-60;
+        font-weight: 600;
+        border-bottom: 2px solid $color-black-20;
+
+        &[aria-sort="ascending"],
+        &[aria-sort="descending"] {
+            position: relative;
+            padding-left: 24px;
+
+            &:after {
+                position: absolute;
+                content: "";
+                width: 24px;
+                height: 24px;
+                display: block;
+                left: 0;
+                top: calc(50% - 12px);
+                background: $color-black-20;
+                mask-image: url("./../../assets/img/icons/arrow_upward-24px.svg");
+                -webkit-mask-image: url("./../../assets/img/icons/arrow_upward-24px.svg");
+            }
+        }
+
+        &[aria-sort="descending"]:after {
+            mask-image: url("./../../assets/img/icons/arrow_downward-24px.svg");
+            -webkit-mask-image: url("./../../assets/img/icons/arrow_downward-24px.svg");
+        }
+    }
+
+    &[data-sortable="true"] {
+        thead td,
+        th {
+            &:hover {
+                text-decoration: underline;
+                cursor: pointer;
+            }
+        }
+    }
+
+    td {
+        border-bottom: 1px solid $color-black-20;
+    }
+
+    &--sortable {
+        thead td,
+        th {
+            &:hover {
+                color: $color-blue;
+            }
+        }
+    }
+
+    &__tr {
+        &--yellow-20 {
+            background: $color-yellow-20;
+        }
+    }
+}

@@ -1,0 +1,70 @@
+.vds-button-group {
+    display: flex;
+
+    &__button {
+        -webkit-appearance: none;
+        font-size: $font-size-default;
+        line-height: 1.5rem;
+        display: inline-block;
+        background: $color-white;
+        border: 2px solid $color-blue;
+        border-right: 0;
+        padding: calc(0.5rem - 2px) calc(1rem - 2px);
+        color: $color-blue;
+
+        &:first-child {
+            border-radius: 0.25rem;
+            border-top-right-radius: 0;
+            border-bottom-right-radius: 0;
+        }
+
+        &:last-child {
+            border-radius: 0.25rem;
+            border-top-left-radius: 0;
+            border-bottom-left-radius: 0;
+            border-right: 2px solid $color-blue;
+        }
+
+        &:focus {
+            outline: none;
+            border-color: $color-blue;
+            box-shadow: 0 0 0 0.25rem lighten($color-blue, 40);
+            color: $color-blue;
+        }
+
+        &:hover,
+        &--selected {
+            background: $color-blue;
+            color: $color-white;
+
+            i {
+                background: $color-white;
+            }
+        }
+
+        &:active {
+            background: darken($color-blue, 10);
+            color: $color-white;
+
+            i {
+                background: $color-white;
+            }
+        }
+
+        &:visited {
+            color: $color-blue;
+
+            &:hover {
+                color: $color-white;
+
+                i {
+                    background: $color-white;
+                }
+            }
+        }
+
+        i {
+            top: 0;
+        }
+    }
+}

@@ -1,0 +1,17 @@
+.vds-label {
+    display: block;
+    font-size: $font-size-default;
+
+    &:not(:last-child) {
+        margin-bottom: 0.25rem;
+    }
+
+    &:not(.vds-label--required) {
+        &:after {
+            font-size: .75rem;
+            color: $color-black-60;
+            margin-left: 1rem;
+            content: "Optioneel";
+        }
+    }
+}

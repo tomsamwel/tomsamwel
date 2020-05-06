@@ -1,0 +1,63 @@
+.vds-icon {
+    display: inline-block;
+    height: 1.5rem;
+    width: 1.5rem;
+
+    // fix alignment
+    position: relative;
+    top: -0.125rem;
+    vertical-align: middle;
+
+    &--before {
+        margin-right: 1rem;
+    }
+
+    &--after {
+        margin-left: 1rem;
+    }
+
+    &--tight-before {
+        margin-right: 0.5rem;
+    }
+
+    &--tight-after {
+        margin-left: 0.5rem;
+    }
+
+    $icons: "add", "arrow_back", "arrow_downward", "arrow_forward",
+        "arrow_upward", "assignment", "bookmark", "cached", "chevron_left",
+        "chevron_right", "clear", "delete", "devices_other", "done", "email",
+        "expand_less", "expand_more", "event", "face", "favorite",
+        "favorite_border", "fingerprint", "grid_on", "home", "info", "label",
+        "language", "launch", "location_city", "notifications_active", "public",
+        "refresh", "remove", "reply", "school", "search", "speed", "star",
+        "supervisor_account", "textsms", "timeline", "warning";
+
+    @each $icon in $icons {
+        &--#{$icon} {
+            background: $color-black;
+            mask-image: url("./../../assets/img/icons/#{$icon}-24px.svg");
+            -webkit-mask-image: url("./../../assets/img/icons/#{$icon}-24px.svg");
+        }
+    }
+
+    &--yellow {
+        background: $color-yellow;
+    }
+
+    &--red {
+        background: $color-red;
+    }
+
+    &--green {
+        background: $color-green;
+    }
+
+    &--white {
+        background: $color-white;
+    }
+
+    &--blue {
+        background: $color-blue;
+    }
+}

@@ -1,0 +1,16 @@
+.vds-page-header {
+    padding-bottom: 1rem;
+    border-bottom: 1px solid $color-black-20;
+    margin-bottom: 1.5rem;
+    display: flex;
+
+    a {
+        color: $color-black;
+    }
+
+    &__item {
+        &--right {
+            margin-left: auto;
+        }
+    }
+}

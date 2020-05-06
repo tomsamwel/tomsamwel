@@ -1,0 +1,89 @@
+.vds-dialog {
+    &[aria-hidden] {
+        display: none;
+    }
+
+    @keyframes fade-in {
+        from { opacity: 0;  }
+        to { opacity: 1;  }
+    }
+
+    @keyframes appear {
+        from { transform: translate(-50%, -40%); opacity: 0; }
+        to { transform: translate(-50%, -50%); opacity: 1; }
+    }
+
+    &:not([aria-hidden='true']) {
+        & > .vds-dialog__overlay {
+            animation: fade-in 160ms 1 both;
+        }
+
+        & > .vds-dialog__dialog {
+            animation: appear 160ms 80ms 1 both;
+        }
+    }
+
+    &__overlay {
+        z-index: 2;
+        background-color: transparentize($color-blue-dark, .3);
+        position: fixed;
+        top: 0;
+        left: 0;
+        bottom: 0;
+        right: 0;
+    }
+
+    // TODO: native dialog backdrop not yet supported in Firefox -b
+    // &__dialog::backdrop {
+    //     background-color: transparentize($color-blue-dark, .3);
+    // }
+
+    &__dialog {
+        background-color: rgb(255, 255, 255);
+        z-index: 3;
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        margin: 0;
+        width: 100%;
+        max-width: 36rem;
+        box-shadow: 0 2px 2px 0 rgba(0,0,0,0.25);
+        border-radius: .25rem;
+        border: none;
+        padding: 0;
+
+        &[open] {
+            display: block;
+        }
+    }
+
+    &__title, &__content, &__actions {
+        padding: 1rem 1.5rem;
+    }
+
+    &__title {
+        border-bottom: 1px solid $color-black-20;
+        display: flex;
+    }
+
+    &__close {
+        border: 0;
+        background: 0;
+        padding: 0;
+        margin-left: auto;
+    }
+
+    &__content {
+        padding: 2rem 1.5rem;
+        max-height: 60vh;
+        overflow-y: auto;
+    }
+
+    &__actions {
+        border-top: 1px solid $color-black-20;
+        display: flex;
+        justify-content: space-between;
+        align-items: baseline;
+    }
+}

@@ -1,0 +1,21 @@
+.vds-page-actions {
+    margin-bottom: 1.5rem;
+    display: flex;
+    flex-wrap: wrap;
+
+    &--space-between {
+        justify-content: space-between;
+    }
+
+    & > * {
+        margin-right: .25rem;
+        margin-bottom: .25rem;
+        flex-shrink: 0;
+    }
+
+    &__item {
+        &--right {
+            margin-left: auto;
+        }
+    }
+}

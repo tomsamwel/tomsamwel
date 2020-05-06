@@ -1,0 +1,67 @@
+.vds-inline-edit {
+    position: relative;
+
+    &__trigger {
+        display: inline-block;
+        min-width: 1.5rem;
+        border-bottom: 1px dotted $color-black-20;
+
+        &:hover {
+            background: $color-blue-20;
+            border-radius: .25rem;
+            cursor: pointer;
+        }
+    }
+
+    &__editor {
+        position: absolute;
+        z-index: 1;
+        top: 24px;
+        left: 0;
+        background: $color-white;
+
+        @supports (backdrop-filter: blur(8px)) or (-webkit-backdrop-filter: blur(8px)) {
+            background: rgba(255,255,255,.6);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+        }
+
+        padding: .5rem;
+        border: 1px solid $color-black-20;
+        box-shadow: 0 4px 8px 0 rgba(0,0,0,0.25);
+        border-radius: .25rem;
+    }
+
+    &__form {
+        display: flex;
+
+        &.vds-inline-edit__form--textarea {
+            flex-wrap: wrap;
+
+            .vds-textarea {
+                height: 20rem;
+                flex-shrink: 0;
+                margin-bottom: .5rem;
+            }
+
+            .vds-inline-edit__submit {
+                margin-left: 0;
+            }
+        }
+    }
+
+    &__suffix {
+        margin-left: .25rem;
+        line-height: 2.5rem;
+    }
+
+    &__submit {
+        margin-left: 1rem;
+    }
+
+    &__cancel {
+        margin-left: .25rem;
+        display: flex;
+        align-items: center;
+    }
+}

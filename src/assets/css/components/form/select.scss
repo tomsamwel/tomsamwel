@@ -1,0 +1,85 @@
+.vds-select {
+    display: inline-block;
+    max-width: 100%;
+    width: 100%;
+    position: relative;
+    vertical-align: top;
+
+    &--s {
+        width: 6rem;
+        max-width: 6rem;
+    }
+
+    &--m {
+        width: 12rem;
+        max-width: 12rem;
+    }
+
+    &--l {
+        width: 16rem;
+        max-width: 16rem;
+    }
+
+    &--xl {
+        width: 20rem;
+        max-width: 20rem;
+    }
+
+    &--xxl {
+        width: 48rem;
+        max-width: 48rem;
+    }
+
+    &:not(.vds-select--multiple) {
+        height: 2.5rem;
+
+        &:after {
+            position: absolute;
+            content: "";
+            width: 24px;
+            height: 24px;
+            display: block;
+            right: 0.75rem;
+            top: calc(50% - 12px);
+            background: $color-blue;
+            // mask-image: url("./../../assets/img/icons/expand_more-24px.svg");
+            // -webkit-mask-image: url("./../../assets/img/icons/expand_more-24px.svg");
+            pointer-events: none;
+        }
+    }
+
+    select {
+        cursor: pointer;
+        display: block;
+        font-size: $font-size-default;
+        font-family: $font-family-primary;
+        max-width: 100%;
+        outline: 0;
+        background-color: $color-white;
+        border: 1px solid $color-black-20;
+        border-radius: 0.25rem;
+        color: inherit;
+        -webkit-appearance: none;
+        align-items: center;
+        box-shadow: none;
+        height: 2.5rem;
+        justify-content: flex-start;
+        line-height: 1.5;
+        padding-bottom: calc(0.5em - 1px);
+        padding-left: calc(0.75em - 1px);
+        padding-top: calc(0.5em - 1px);
+        position: relative;
+        vertical-align: top;
+        width: 100%;
+
+        &:not([multiple]) {
+            padding-right: 2.5rem;
+        }
+
+        &:focus {
+            outline: none;
+            border-color: $color-blue;
+            box-shadow: 0 0 0 0.25rem lighten($color-blue, 40);
+        }
+    }
+}

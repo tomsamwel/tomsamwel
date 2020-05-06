@@ -1,0 +1,36 @@
+.vds-dot {
+    display: inline-block;
+    width: .5rem;
+    height: .5rem;
+    border-radius: 1rem;
+
+    &--yellow {
+        background: $color-yellow;
+        color: $color-black;
+    }
+
+    &--turquoise {
+        background: $color-turquoise;
+        color: $color-black;
+    }
+
+    &--red {
+        background: $color-red;
+    }
+
+    &--blue {
+        background: $color-blue;
+    }
+
+    &--purple {
+        background: $color-purple;
+    }
+
+    &--orange {
+        background: $color-orange;
+    }
+
+    &--green {
+        background: $color-green;
+    }
+}

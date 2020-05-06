@@ -1,0 +1,9 @@
+.vds-container {
+    width: 96%;
+    max-width: 1440px;
+    margin: 0 auto;
+
+    &--wide {
+        max-width: 2560px;
+    }
+}

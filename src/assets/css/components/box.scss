@@ -1,0 +1,64 @@
+.vds-box {
+    padding: 1.5rem;
+    border-radius: .25rem;
+    margin-bottom: 1.5rem;
+
+    &--blue-20 {
+        background: $color-blue-20;
+        color: $color-black;
+    }
+
+    &--blue-40 {
+        background: $color-blue-40;
+        color: $color-black;
+    }
+
+    &--yellow-20 {
+        background: $color-yellow-20;
+        color: $color-black;
+    }
+
+    &--yellow-40 {
+        background: $color-yellow-40;
+        color: $color-black;
+    }
+
+    &--outline {
+        border: 1px solid $color-black-20;
+    }
+
+    @media (min-width: $breakpoint-l) {
+        &--horizontal {
+            display: flex;
+
+            .vds-box__title {
+                width: 25%;
+                max-width: 288px;
+                border-bottom: none;
+                border-right: 1px solid $color-black-20;
+                padding: 1.5rem 1.5rem 1.5rem 1.5rem;
+                margin: -1.5rem 0 -1.5rem -1.5rem;
+                background: $color-black-03;
+                flex-shrink: 0;
+            }
+
+            .vds-box__content {
+                padding: 1.5rem;
+                margin: -1.5rem 0;
+            }
+        }
+    }
+
+    &__title {
+        padding: 0 1.5rem 1.5rem 1.5rem;
+        border-bottom: 1px solid $color-black-20;
+        margin-left: -1.5rem;
+        margin-right: -1.5rem;
+    }
+
+    &__content {
+        padding: 1.5rem 1.5rem 0 1.5rem;
+        margin-left: -1.5rem;
+        margin-right: -1.5rem;
+    }
+}

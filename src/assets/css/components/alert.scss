@@ -1,0 +1,55 @@
+.vds-alert {
+    padding: 0.75rem 0.75rem 0.75rem 3rem;
+    border-radius: 0.25rem;
+    margin-bottom: 1.5rem;
+    position: relative;
+
+    &:before {
+        position: absolute;
+        content: "";
+        width: 24px;
+        height: 24px;
+        display: block;
+        left: 0.75rem;
+    }
+
+    &--info {
+        background: $color-blue-20;
+
+        &:before {
+            background: $color-blue;
+            mask-image: url("./../../assets/img/icons/info-24px.svg");
+            -webkit-mask-image: url("./../../assets/img/icons/info-24px.svg");
+        }
+    }
+
+    &--warning {
+        background: $color-yellow-20;
+
+        &:before {
+            background: $color-yellow;
+            mask-image: url("./../../assets/img/icons/warning-24px.svg");
+            -webkit-mask-image: url("./../../assets/img/icons/warning-24px.svg");
+        }
+    }
+
+    &--error {
+        background: $color-red-20;
+
+        &:before {
+            background: $color-red;
+            mask-image: url("./../../assets/img/icons/clear-24px.svg");
+            -webkit-mask-image: url("./../../assets/img/icons/clear-24px.svg");
+        }
+    }
+
+    &--success {
+        background: $color-green-20;
+
+        &:before {
+            background: $color-green;
+            mask-image: url("./../../assets/img/icons/done-24px.svg");
+            -webkit-mask-image: url("./../../assets/img/icons/done-24px.svg");
+        }
+    }
+}

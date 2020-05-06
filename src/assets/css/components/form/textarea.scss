@@ -1,0 +1,45 @@
+.vds-textarea {
+    max-width: 100%;
+    width: 100%;
+    background-color: $color-white;
+    border-radius: .25rem;
+    border: 1px solid $color-black-20;
+    color: $color-black;
+    -webkit-appearance: none;
+    align-items: center;
+    display: inline-flex;
+    font-size: $font-size-default;
+    min-height: 2.5rem;
+    justify-content: flex-start;
+    line-height: 1.5;
+    padding-bottom: calc(.5em - 1px);
+    padding-left: calc(.75em - 1px);
+    padding-right: calc(.75em - 1px);
+    padding-top: calc(.5em - 1px);
+    position: relative;
+    vertical-align: top;
+    margin: 0;
+    font-family: $font-family-primary;
+
+    &:focus {
+        outline: none;
+        border-color: $color-blue;
+        box-shadow: 0 0 0 0.25rem lighten($color-blue, 40);
+    }
+
+    &--s {
+        width: 6rem;
+    }
+
+    &--m {
+        width: 12rem;
+    }
+
+    &--l {
+        width: 16rem;
+    }
+
+    &--xl {
+        width: 20rem;
+    }
+}

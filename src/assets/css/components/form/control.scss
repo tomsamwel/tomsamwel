@@ -1,0 +1,30 @@
+.vds-control {
+    box-sizing: border-box;
+    clear: both;
+    position: relative;
+    text-align: left;
+
+    &--icon-left {
+        .vds-control__icon {
+            position: absolute;
+            top: calc(50% - .5rem);
+            left: .5rem;
+        }
+
+        .vds-input {
+            padding-left: 2.5rem;
+        }
+    }
+
+    &__addon {
+        color: $color-black-60;
+        line-height: 2.5rem;
+        margin-right: .25rem;
+    }
+
+    &__help {
+        margin-top: .5rem;
+        color: $color-black-60;
+        font-size: $font-size-s;
+    }
+}

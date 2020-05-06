@@ -1,0 +1,49 @@
+@keyframes slideOutLeft {
+    to {
+        left: -100rem;
+        opacity: 0;
+    }
+}
+
+.vds-toasts {
+    position: fixed;
+    bottom: 1rem;
+    left: 1rem;
+    width: 40rem;
+    flex-wrap: wrap-reverse;
+    pointer-events: none;
+
+    &__toast {
+        border-radius: 100rem;
+        background: $color-black;
+        color: $color-white;
+        padding: .5rem;
+        margin-bottom: .5rem;
+        left: 0;
+
+        &:last-child {
+            margin-bottom: 0;
+        }
+
+        &--autohide {
+            position: relative;
+            animation: slideOutLeft .25s ease-in 8s forwards;
+            animation-fill-mode: forwards;
+        }
+    }
+
+    &__icon {
+        padding: .5rem;
+        border-radius: 100rem;
+        display: inline-block;
+        margin-right: .5rem;
+
+        &--warning {
+            background: $color-red;
+        }
+
+        &--success {
+            background: $color-green;
+        }
+    }
+}

@@ -1,0 +1,152 @@
+.vds-badge {
+    padding: 0 .25rem;
+    text-transform: uppercase;
+    font-size: $font-size-s;
+    color: $color-white;
+    font-weight: 600;
+    border-radius: .25rem;
+
+    &--no-grow {
+        display: inline-block;
+    }
+
+    &--yellow {
+        background: $color-yellow;
+        color: $color-black;
+    }
+
+    &--yellow-40 {
+        background: $color-yellow-40;
+        color: $color-black;
+    }
+
+    &--yellow-60 {
+        background: $color-yellow-60;
+        color: $color-black;
+    }
+
+    &--yellow-80 {
+        background: $color-yellow-80;
+        color: $color-black;
+    }
+
+    &--turquoise {
+        background: $color-turquoise;
+        color: $color-black;
+    }
+
+    &--turquoise-40 {
+        background: $color-turquoise-40;
+        color: $color-black;
+    }
+
+    &--turquoise-60 {
+        background: $color-turquoise-60;
+        color: $color-black;
+    }
+
+    &--turquoise-80 {
+        background: $color-turquoise-80;
+        color: $color-black;
+    }
+
+    &--red {
+        background: $color-red;
+    }
+
+    &--red-40 {
+        background: $color-red-40;
+        color: $color-black;
+    }
+
+    &--red-60 {
+        background: $color-red-60;
+        color: $color-black;
+    }
+
+    &--red-80 {
+        background: $color-red-80;
+        color: $color-black;
+    }
+
+    &--blue {
+        background: $color-blue;
+    }
+
+    &--blue-40 {
+        background: $color-blue-40;
+        color: $color-black;
+    }
+
+    &--blue-60 {
+        background: $color-blue-60;
+        color: $color-black;
+    }
+
+    &--blue-80 {
+        background: $color-blue-80;
+        color: $color-black;
+    }
+
+    &--purple {
+        background: $color-purple;
+    }
+
+    &--purple-40 {
+        background: $color-purple-40;
+        color: $color-black;
+    }
+
+    &--purple-60 {
+        background: $color-purple-60;
+        color: $color-black;
+    }
+
+    &--purple-80 {
+        background: $color-purple-80;
+        color: $color-black;
+    }
+
+    &--orange {
+        background: $color-orange;
+    }
+
+    &--orange-40 {
+        background: $color-orange-40;
+        color: $color-black;
+    }
+
+    &--orange-60 {
+        background: $color-orange-60;
+        color: $color-black;
+    }
+
+    &--orange-80 {
+        background: $color-orange-80;
+        color: $color-black;
+    }
+
+    &--green {
+        background: $color-green;
+    }
+
+    &--green-40 {
+        background: $color-green-40;
+        color: $color-black;
+    }
+
+    &--green-60 {
+        background: $color-green-60;
+        color: $color-black;
+    }
+
+    &--green-80 {
+        background: $color-green-80;
+        color: $color-black;
+    }
+
+    &--black-20 {
+        background: $color-black-20;
+        color: $color-black;
+    }
+}

@@ -1,0 +1,22 @@
+.vds-markdown-preview {
+    display: flex;
+
+    &__field, &__preview {
+        width: 50%;
+    }
+
+    &__field {
+        textarea {
+            border-top-right-radius: 0;
+            border-bottom-right-radius: 0;
+        }
+    }
+
+    &__preview {
+        border: 1px solid $color-black-20;
+        border-left: 0;
+        border-top-right-radius: .25rem;
+        border-bottom-right-radius: .25rem;
+        padding: .5rem;
+    }
+}

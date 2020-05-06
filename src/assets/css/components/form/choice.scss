@@ -1,0 +1,27 @@
+.vds-choice {
+    margin-bottom: .25rem;
+
+    input[type=checkbox], input[type=radio] {
+        display: inline-block;
+        margin-right: .25rem;
+        transform: scale(1.25);
+
+        &[disabled] {
+            background-color: $color-black-03;
+            cursor: not-allowed;
+
+            & + label {
+                color: $color-black-20;
+            }
+        }
+    }
+
+    .vds-label {
+        display: inline-block;
+
+        &:after {
+            // hide optional label
+            display: none;
+        }
+    }
+}

@@ -1,0 +1,77 @@
+.vds-input {
+    max-width: 100%;
+    width: 100%;
+    background-color: $color-white;
+    border-radius: .25rem;
+    border: 1px solid $color-black-20;
+    color: $color-black;
+    -webkit-appearance: none;
+    align-items: center;
+    display: inline-flex;
+    font-size: $font-size-default;
+    height: 2.5em;
+    justify-content: flex-start;
+    line-height: 1.5;
+    padding-bottom: calc(.5em - 1px);
+    padding-left: calc(.75em - 1px);
+    padding-right: calc(.75em - 1px);
+    padding-top: calc(.5em - 1px);
+    position: relative;
+    vertical-align: top;
+    margin: 0;
+    font-family: $font-family-primary;
+
+    &:focus {
+        outline: none;
+        border-color: $color-blue;
+        box-shadow: 0 0 0 0.25rem lighten($color-blue, 40);
+    }
+
+    &[disabled] {
+        background-color: $color-black-03;
+        color: $color-black-60;
+        cursor: not-allowed;
+    }
+
+    &--s {
+        width: 6rem;
+    }
+
+    &--m {
+        width: 12rem;
+    }
+
+    &--l {
+        width: 16rem;
+    }
+
+    &--xl {
+        width: 20rem;
+    }
+
+    &--xxl {
+        width: 48rem;
+    }
+
+    &--inline {
+        display: flex;
+
+        & > * {
+            margin-right: .5rem;
+
+            &:last-child {
+                margin-right: 0;
+            }
+        }
+    }
+
+    // TODO: do we need to move this to control or field?
+    &__errors {
+        list-style-type: none;
+        margin: 0;
+        margin-top: .5rem;
+        padding: 0;
+        color: $color-red;
+        font-weight: 600;
+    }
+}

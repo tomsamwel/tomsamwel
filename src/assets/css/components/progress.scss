@@ -1,0 +1,26 @@
+.vds-progress {
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    height: .25rem;
+    border-radius: .25rem;
+    background: $color-black-03;
+    border: none;
+    width: 100%;
+    margin-bottom: 1.5rem;
+
+    &::-webkit-progress-bar {
+        border-radius: .25rem;
+        background: $color-black-03;
+    }
+
+    &::-moz-progress-bar {
+        background-color: $color-blue;
+        border-radius: .25rem;
+    }
+
+    &::-webkit-progress-value {
+        background-color: $color-blue;
+        border-radius: .25rem;
+    }
+}

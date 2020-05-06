@@ -1,0 +1,20 @@
+.vds-toggle {
+    display: inline-flex;
+    position: relative;
+    vertical-align: top;
+
+    &__content {
+        display: none;
+        left: 0;
+        min-width: 12rem;
+        position: absolute;
+        top: 100%;
+        z-index: 60;
+    }
+
+    &--is-active {
+        .vds-toggle__content {
+            display: block;
+        }
+    }
+}

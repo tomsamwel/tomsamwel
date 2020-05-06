@@ -1,0 +1,10 @@
+.vds-line {
+    margin: 1.5rem 0;
+    height: 2px;
+    background: $color-black-20;
+    border: none;
+
+    &--small {
+        height: 1px;
+    }
+}
