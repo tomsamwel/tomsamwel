@@ -1,166 +1,173 @@
 <template>
-	<div class="fieldwork-day" :class="{ isDragging: isDragging }">
-		<div class="fieldwork-day__date">{{ dateHuman }}</div>
-		<div class="fieldwork-day__times">
-			<div
-				v-for="hour in scheduleHours"
-				:key="hour"
-				class="fieldwork-day__times__hour"
-				:style="hourHeightStyles"
-			>
-				<scheduleSlot
-					v-for="minute of intervals"
-					:key="minute"
-					:id="dateToId(hour, minute)"
-					:isEnabled="isWithinRange(hour, minute)"
-					:timehuman="timeHuman(hour, minute)"
-				></scheduleSlot>
-			</div>
-		</div>
-		<div class="fieldwork-day__date">{{ dateHuman }}</div>
-	</div>
+  <div
+    class="fieldwork-day"
+    :class="{isDragging: isDragging}"
+  >
+    <div class="fieldwork-day__date">
+      {{ dateHuman }}
+    </div>
+    <div class="fieldwork-day__times">
+      <div
+        v-for="hour in scheduleHours"
+        :key="hour"
+        class="fieldwork-day__times__hour"
+        :style="hourHeightStyles"
+      >
+        <scheduleSlot
+          v-for="minute of intervals"
+          :id="dateToId(hour, minute)"
+          :key="minute"
+          :is-enabled="isWithinRange(hour, minute)"
+          :timehuman="timeHuman(hour, minute)"
+        />
+      </div>
+    </div>
+    <div class="fieldwork-day__date">
+      {{ dateHuman }}
+    </div>
+  </div>
 </template>
 
 <script>
 import scheduleSlot from "./schedule-slot";
 
 export default {
-	components: { scheduleSlot },
+  components: { scheduleSlot },
 
-	props: {
-		date: {
-			type: [String, Date],
-			default() {
-				return new Date();
-			}
-		},
+  props: {
+    date: {
+      type: [String, Date],
+      default() {
+        return new Date();
+      }
+    },
 
-		range: {
-			type: Object,
-			default() {
-				return {
-					startHour: 0,
-					startMinute: 0,
-					endHour: 24,
-					endMinute: 0
-				};
-			}
-		}
-	},
+    range: {
+      type: Object,
+      default() {
+        return {
+          startHour: 0,
+          startMinute: 0,
+          endHour: 24,
+          endMinute: 0
+        };
+      }
+    }
+  },
 
-	computed: {
-		isDragging() {
-			return this.$store.getters["schedule/isDragging"];
-		},
+  computed: {
+    isDragging() {
+      return this.$store.getters["schedule/isDragging"];
+    },
 
-		hourHeightStyles() {
-			return this.$store.getters["schedule/hourHeightStyles"];
-		},
+    hourHeightStyles() {
+      return this.$store.getters["schedule/hourHeightStyles"];
+    },
 
-		scheduleHours() {
-			return this.$store.getters["schedule/hoursArray"];
-		},
+    scheduleHours() {
+      return this.$store.getters["schedule/hoursArray"];
+    },
 
-		slotsOccupiedCount() {
-			return (
-				this.$store.getters["schedule/sessionLengthMinutes"] /
-				this.$store.getters["schedule/precisionMinutes"]
-			);
-		},
+    slotsOccupiedCount() {
+      return (
+        this.$store.getters["schedule/sessionLengthMinutes"] /
+        this.$store.getters["schedule/precisionMinutes"]
+      );
+    },
 
-		intervals() {
-			let intervals = [];
+    intervals() {
+      let intervals = [];
 
-			let step = 0;
-			while (step < 60) {
-				intervals.push(step);
-				step = step + this.$store.getters["schedule/precisionMinutes"];
-			}
-			return intervals;
-		},
+      let step = 0;
+      while (step < 60) {
+        intervals.push(step);
+        step = step + this.$store.getters["schedule/precisionMinutes"];
+      }
+      return intervals;
+    },
 
-		dateHuman() {
-			let date = new Date(this.date);
-			return new Intl.DateTimeFormat("nl", {
-				weekday: "long",
-				day: "numeric",
-				month: "long",
-				year: "numeric"
-			}).format(date);
-		}
-	},
+    dateHuman() {
+      let date = new Date(this.date);
+      return new Intl.DateTimeFormat("nl", {
+        weekday: "long",
+        day: "numeric",
+        month: "long",
+        year: "numeric"
+      }).format(date);
+    }
+  },
 
-	methods: {
-		// convert int Hour and int Minute to eg.. "12:15" or "09:05"
-		timeHuman(hour, minute) {
-			while (String(hour).length < 2) {
-				hour = "0" + hour;
-			}
-			while (String(minute).length < 2) {
-				minute = "0" + minute;
-			}
-			return `${hour}:${minute}`;
-		},
+  watch: {
+    isDragging(val) {
+      if (!val) this.fixOverlapping();
+    }
+  },
 
-		isWithinRange(hour, minute) {
-			hour = parseInt(hour);
-			if (hour < this.range.startHour || hour > this.range.endHour)
-				return false;
-			else if (
-				hour === this.range.startHour &&
-				minute < this.range.startMinute
-			)
-				return false;
-			else if (
-				hour === this.range.endHour &&
-				minute >= this.range.endMinute
-			)
-				return false;
-			return true;
-		},
+  mounted() {
+    Event.$on("fixOverlapping", this.fixOverlapping);
+  },
 
-		dateToId(hour, minute) {
-			let date = new Date(this.date);
-			date.setHours(hour, minute, 0);
-			return date.getTime();
-		},
+  methods: {
+    // convert int Hour and int Minute to eg.. "12:15" or "09:05"
+    timeHuman(hour, minute) {
+      while (String(hour).length < 2) {
+        hour = "0" + hour;
+      }
+      while (String(minute).length < 2) {
+        minute = "0" + minute;
+      }
+      return `${hour}:${minute}`;
+    },
 
-		fixOverlapping() {
-			let stepCount = this.slotsOccupiedCount - 1;
-			let overlappingElements = [];
+    isWithinRange(hour, minute) {
+      hour = parseInt(hour);
+      if (hour < this.range.startHour || hour > this.range.endHour)
+        return false;
+      else if (
+        hour === this.range.startHour &&
+        minute < this.range.startMinute
+      )
+        return false;
+      else if (
+        hour === this.range.endHour &&
+        minute >= this.range.endMinute
+      )
+        return false;
+      return true;
+    },
 
-			this.$el.querySelectorAll(".slot.dropzone").forEach(slot => {
-				if (slot.children.length) {
-					//if schedule slot has any items
-					overlappingElements.push(...slot.children); //store items
-					stepCount = this.slotsOccupiedCount - 1;
-				} else if (!stepCount) {
-					this.divideWidth(overlappingElements);
-					overlappingElements = [];
-					stepCount = this.slotsOccupiedCount - 1;
-				}
-				stepCount--;
-			});
-		},
+    dateToId(hour, minute) {
+      let date = new Date(this.date);
+      date.setHours(hour, minute, 0);
+      return date.getTime();
+    },
 
-		divideWidth(elements) {
-			let width = 100 / elements.length;
-			elements.forEach(el => {
-				el.style.width = width + "%";
-				el.style.marginLeft = elements.indexOf(el) * width + "%";
-			});
-		}
-	},
+    fixOverlapping() {
+      let stepCount = this.slotsOccupiedCount - 1;
+      let overlappingElements = [];
 
-	mounted() {
-		Event.$on("fixOverlapping", this.fixOverlapping);
-	},
+      this.$el.querySelectorAll(".slot.dropzone").forEach(slot => {
+        if (slot.children.length) {
+          //if schedule slot has any items
+          overlappingElements.push(...slot.children); //store items
+          stepCount = this.slotsOccupiedCount - 1;
+        } else if (!stepCount) {
+          this.divideWidth(overlappingElements);
+          overlappingElements = [];
+          stepCount = this.slotsOccupiedCount - 1;
+        }
+        stepCount--;
+      });
+    },
 
-	watch: {
-		isDragging(val) {
-			if (!val) this.fixOverlapping();
-		}
-	}
+    divideWidth(elements) {
+      let width = 100 / elements.length;
+      elements.forEach(el => {
+        el.style.width = width + "%";
+        el.style.marginLeft = elements.indexOf(el) * width + "%";
+      });
+    }
+  }
 };
 </script>
 

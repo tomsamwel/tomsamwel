@@ -1,9 +1,13 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
 import store from "./store";
+import Index from "./components/tomsamwel/index.vue";
 
 import routes from "./routes";
-import App from "./App.vue";
+
+Vue.use(VueRouter);
+const router = new VueRouter({ routes });
+
 
 import {
     MdButton,
@@ -16,7 +20,7 @@ import {
     MdTooltip,
 } from "vue-material/dist/components";
 import "vue-material/dist/vue-material.min.css";
-import "vue-material/dist/theme/default.css"; // This line here
+import "vue-material/dist/theme/default.css";
 
 Vue.use(MdButton);
 Vue.use(MdContent);
@@ -43,13 +47,9 @@ Date.prototype.toSQLString = function() {
 // easy global events
 window.Event = new Vue();
 
-Vue.use(VueRouter);
-const router = new VueRouter({ routes });
-
-Vue.config.productionTip = false;
-
 new Vue({
+    name: "Tomsamwel",
     router,
     store,
-    render: (h) => h(App),
+    render: (h) => h(Index),
 }).$mount("#app");

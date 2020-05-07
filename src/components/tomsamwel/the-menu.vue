@@ -1,43 +1,71 @@
-<template>
-	<div class="menu">
-		<div @click="toggle" class="menu__toggle bubble" :class="{isOpen : isVisible}">
-			<span></span>
-			<span></span>
-			<span></span>
-		</div>
-
-		<transition name="fade">
-			<div v-show="isVisible" @click="isVisible = false" class="menu__overlay">
-				<div class="menu-items">
-					<MdRipple>
-						<router-link to="/work" tag="div" class="menu-item">work</router-link>
-					</MdRipple>
-					<MdRipple>
-						<router-link to="/about" tag="div" class="menu-item">about</router-link>
-					</MdRipple>
-					<MdRipple>
-						<router-link to="/contact" tag="div" class="menu-item">contact</router-link>
-					</MdRipple>
-				</div>
-			</div>
-		</transition>
-	</div>
-</template>
-
 <script>
 export default {
-	data() {
-		return {
-			isVisible: false
-		};
-	},
-	methods: {
-		toggle() {
-			this.isVisible = !this.isVisible;
-		}
-	}
+  name: "TheMenu",
+  data() {
+    return {
+      isVisible: false
+    };
+  },
+  methods: {
+    toggle() {
+      this.isVisible = !this.isVisible;
+    }
+  }
 };
 </script>
+
+<template>
+  <div class="menu">
+    <div
+      class="bubble menu__toggle"
+      :class="{isOpen: isVisible}"
+      @click="toggle"
+    >
+      <span />
+      <span />
+      <span />
+    </div>
+
+    <transition name="fade">
+      <div
+        v-show="isVisible"
+        class="menu__overlay"
+        @click="isVisible = false"
+      >
+        <div class="menu-items">
+          <MdRipple>
+            <router-link
+              to="/work"
+              tag="div"
+              class="menu-item"
+            >
+              work
+            </router-link>
+          </MdRipple>
+          <MdRipple>
+            <router-link
+              to="/"
+              tag="div"
+              class="menu-item"
+            >
+              about
+            </router-link>
+          </MdRipple>
+          <MdRipple>
+            <router-link
+              to="/contact"
+              tag="div"
+              class="menu-item"
+            >
+              contact
+            </router-link>
+          </MdRipple>
+        </div>
+      </div>
+    </transition>
+  </div>
+</template>
+
 
 <style lang="scss">
 .menu {
@@ -59,7 +87,7 @@ export default {
 		user-select: none;
 		border-radius: 100%;
 		transition: transform 0.5s cubic-bezier(0.77, 0.2, 0.05, 1),
-			background 0.5s cubic-bezier(0.77, 0.2, 0.05, 1), opacity 0.55s ease;
+			background 0.5s cubic-bezier(0.77, 0.2, 0.05, 1), opacity 0.5s ease;
 
 		&:hover {
 			background-color: rgb(0, 0, 0); /* Black fallback color */

@@ -1,52 +1,57 @@
 <template>
-	<div class="schedule">
-		<transition name="slide-fade">
-			<div v-show="scheduleItemsListVisible" class="schedule-items">
-				<slot name="scheduleItems"></slot>
-			</div>
-		</transition>
+  <div class="schedule">
+    <transition name="slide-fade">
+      <div
+        v-show="scheduleItemsListVisible"
+        class="schedule-items"
+      >
+        <slot name="scheduleItems" />
+      </div>
+    </transition>
 
-		<div class="schedule-timestamps">
-			<div class="schedule-timestamps__corner"></div>
-			<div
-				v-for="hour of scheduleHours"
-				:key="hour.index"
-				class="schedule-timestamps__hour"
-				:style="hourHeightStyles"
-			>
-				<div class="schedule-timestamps__timehuman">{{ timeHuman(hour) }}</div>
-			</div>
-		</div>
-		<div class="schedule__days">
-			<slot name="scheduleDays"></slot>
-		</div>
-	</div>
+    <div class="schedule-timestamps">
+      <div class="schedule-timestamps__corner" />
+      <div
+        v-for="hour of scheduleHours"
+        :key="hour.index"
+        class="schedule-timestamps__hour"
+        :style="hourHeightStyles"
+      >
+        <div class="schedule-timestamps__timehuman">
+          {{ timeHuman(hour) }}
+        </div>
+      </div>
+    </div>
+    <div class="schedule__days">
+      <slot name="scheduleDays" />
+    </div>
+  </div>
 </template>
 
 <script>
 export default {
-	props: {
-		scheduleItemsListVisible: Boolean
-	},
+  props: {
+    scheduleItemsListVisible: Boolean
+  },
 
-	computed: {
-		hourHeightStyles() {
-			return this.$store.getters["schedule/hourHeightStyles"];
-		},
+  computed: {
+    hourHeightStyles() {
+      return this.$store.getters["schedule/hourHeightStyles"];
+    },
 
-		scheduleHours() {
-			return this.$store.getters["schedule/hoursArray"];
-		}
-	},
+    scheduleHours() {
+      return this.$store.getters["schedule/hoursArray"];
+    }
+  },
 
-	methods: {
-		timeHuman(hour) {
-			while (String(hour).length < 2) {
-				hour = "0" + hour;
-			}
-			return `${hour}:00`;
-		}
-	}
+  methods: {
+    timeHuman(hour) {
+      while (String(hour).length < 2) {
+        hour = "0" + hour;
+      }
+      return `${hour}:00`;
+    }
+  }
 };
 </script>
 

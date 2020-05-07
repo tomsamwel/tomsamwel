@@ -1,17 +1,20 @@
-<template>
-	<div id="app">
-		<TheAppMenu />
-		<router-view />
-	</div>
-</template>
 
 <script>
-import TheAppMenu from "./components/the-app-menu";
+import TheMenu from "./the-menu";
 export default {
-	name: "App",
-	components: { TheAppMenu }
+  name: "Index",
+  components: { TheMenu }
 };
 </script>
+
+<template>
+  <div id="app">
+    <TheMenu />
+    <router-view />
+  </div>
+</template>
+
+
 
 <style lang="scss">
 * {

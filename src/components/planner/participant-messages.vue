@@ -1,52 +1,58 @@
 <template>
-	<div class="messages-list">
-		<details
-			v-for="message of messages"
-			:key="message.id"
-			class="message-item"
-			@click="archiveMessage(message)"
-		>
-			<summary class="message-item__header">
-				<i class="vds-icon vds-icon--blue vds-icon--expand_more"></i>
-				<i class="vds-icon vds-icon--blue vds-icon--expand_less"></i>
-				<div v-if="!message.archived" class="vds-dot vds-dot--red"></div>
-				<strong>{{message.from}}</strong>
-				&rsaquo; {{message.to}}
-				<br />
-				{{message.subject}}
-			</summary>
-			<p class="message-item__content" v-html="message.body"></p>
-		</details>
-	</div>
+  <div class="messages-list">
+    <details
+      v-for="message of messages"
+      :key="message.id"
+      class="message-item"
+      @click="archiveMessage(message)"
+    >
+      <summary class="message-item__header">
+        <i class="vds-icon vds-icon--blue vds-icon--expand_more" />
+        <i class="vds-icon vds-icon--blue vds-icon--expand_less" />
+        <div
+          v-if="!message.archived"
+          class="vds-dot vds-dot--red"
+        />
+        <strong>{{ message.from }}</strong>
+        &rsaquo; {{ message.to }}
+        <br>
+        {{ message.subject }}
+      </summary>
+      <p
+        class="message-item__content"
+        v-html="message.body"
+      />
+    </details>
+  </div>
 </template>
 
 <script>
 export default {
-	props: {
-		participantId: {
-			type: Number,
-			default: 0
-		}
-	},
+  props: {
+    participantId: {
+      type: Number,
+      default: 0
+    }
+  },
 
-	computed: {
-		messages() {
-			return this.$store.getters["participants/participantById"](
-				this.participantId
-			).messages;
-		}
-	},
+  computed: {
+    messages() {
+      return this.$store.getters["participants/participantById"](
+        this.participantId
+      ).messages;
+    }
+  },
 
-	methods: {
-		archiveMessage(message) {
-			if (message.archived) return;
+  methods: {
+    archiveMessage(message) {
+      if (message.archived) return;
 
-			this.$store.dispatch("participants/archiveMessage", {
-				messageId: message.id,
-				participantId: this.participantId
-			});
-		}
-	}
+      this.$store.dispatch("participants/archiveMessage", {
+        messageId: message.id,
+        participantId: this.participantId
+      });
+    }
+  }
 };
 </script>
 

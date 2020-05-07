@@ -1,84 +1,93 @@
 <template>
-	<div class="inline-edit">
-		<div class="inline-edit__trigger" v-show="!editing" @click="openEditor">
-			<slot name="trigger">{{baseValue}}</slot>
-		</div>
-		<div class="inline-edit__editor" v-show="editing">
-			<slot name="editor">
-				<input
-					v-if="type === 'text'"
-					class="vds-input"
-					ref="input"
-					v-model="editedValue"
-					@blur="submit"
-					@keyup.enter.stop="submit"
-					@keyup.esc="cancel"
-				/>
+  <div class="inline-edit">
+    <div
+      v-show="!editing"
+      class="inline-edit__trigger"
+      @click="openEditor"
+    >
+      <slot name="trigger">
+        {{ baseValue }}
+      </slot>
+    </div>
+    <div
+      v-show="editing"
+      class="inline-edit__editor"
+    >
+      <slot name="editor">
+        <input
+          v-if="type === 'text'"
+          ref="input"
+          v-model="editedValue"
+          class="vds-input"
+          @blur="submit"
+          @keyup.enter.stop="submit"
+          @keyup.esc="cancel"
+        >
 
-				<textarea
-					v-else-if="type === 'textarea'"
-					class="vds-textarea"
-					ref="input"
-					v-model="editedValue"
-					@blur="submit"
-					@keyup.esc="cancel"
-				></textarea>
-			</slot>
-		</div>
-	</div>
+        <textarea
+          v-else-if="type === 'textarea'"
+          ref="input"
+          v-model="editedValue"
+          class="vds-textarea"
+          @blur="submit"
+          @keyup.esc="cancel"
+        />
+      </slot>
+    </div>
+  </div>
 </template>
 
 <script>
 export default {
-	props: {
-		value: { type: String },
+  props: {
+    value: { type: String },
 
-		type: { type: String, default: "text" }
-	},
+    type: { type: String, default: "text" }
+  },
 
-	data() {
-		return {
-			editing: false,
-			baseValue: this.value,
-			editedValue: this.value
-		};
-	},
+  data() {
+    return {
+      editing: false,
+      baseValue: this.value,
+      editedValue: this.value
+    };
+  },
 
-	methods: {
-		openEditor() {
-			this.editing = true;
+  watch: {
+    value() {
+      this.baseValue = this.value;
+      this.editedValue = this.value;
+    }
+  },
 
-			this.$nextTick(() => {
-				this.$refs.input.select();
+  methods: {
+    openEditor() {
+      this.editing = true;
 
-				if (this.type === "textarea") this.scaleTextareaHeight();
-			});
-		},
+      this.$nextTick(() => {
+        this.$refs.input.select();
 
-		submit() {
-			if (this.editedValue !== this.baseValue) {
-				this.$emit("submit", this.editedValue);
-			}
-			this.editing = false;
-		},
+        if (this.type === "textarea") this.scaleTextareaHeight();
+      });
+    },
 
-		cancel() {
-			this.editedValue = this.baseValue;
-			this.editing = false;
-		},
+    submit() {
+      if (this.editedValue !== this.baseValue) {
+        this.$emit("submit", this.editedValue);
+      }
+      this.editing = false;
+    },
 
-		scaleTextareaHeight() {
-			this.$refs.input.style.height =
-				this.$refs.input.scrollHeight + 3 + "px";
-		}
-	},
+    cancel() {
+      this.editedValue = this.baseValue;
+      this.editing = false;
+    },
 
-	watch: {
-		value() {
-			this.baseValue = this.value;
-			this.editedValue = this.value;
-		}
-	}
+    scaleTextareaHeight() {
+      this.$refs.input.style.height =
+        this.$refs.input.scrollHeight + 3 + "px";
+    }
+  }
 };
 </script>
 

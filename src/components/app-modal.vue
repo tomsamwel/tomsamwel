@@ -1,54 +1,64 @@
 <template>
-	<div :id="name" class="vds-dialog js-dialog" v-show="isVisible">
-		<div class="vds-dialog__overlay" tabindex="-1" @click="close"></div>
-		<dialog class="vds-dialog__dialog" open>
-			<slot>Something went wrong loading the data.</slot>
-		</dialog>
-	</div>
+  <div
+    v-show="isVisible"
+    :id="name"
+    class="js-dialog vds-dialog"
+  >
+    <div
+      class="vds-dialog__overlay"
+      tabindex="-1"
+      @click="close"
+    />
+    <dialog
+      class="vds-dialog__dialog"
+      open
+    >
+      <slot>Something went wrong loading the data.</slot>
+    </dialog>
+  </div>
 </template>
 
 <script>
 export default {
-	data() {
-		return {
-			isVisible: false
-		};
-	},
+  props: {
+    name: {
+      type: String,
+      required: true
+    },
 
-	props: {
-		name: {
-			type: String,
-			required: true
-		},
+    options: {
+      type: Object,
+      required: false
+    }
+  },
+  data() {
+    return {
+      isVisible: false
+    };
+  },
 
-		options: {
-			type: Object,
-			required: false
-		}
-	},
+  mounted() {
+    this.init();
+  },
 
-	methods: {
-		open() {
-			this.isVisible = true;
-		},
+  methods: {
+    open() {
+      this.isVisible = true;
+    },
 
-		close() {
-			this.isVisible = false;
-		},
+    close() {
+      this.isVisible = false;
+    },
 
-		init() {
-			Event.$on(`close${this.name}`, () => {
-				this.close();
-			});
-			Event.$on(`open${this.name}`, () => {
-				this.open();
-			});
-		}
-	},
-
-	mounted() {
-		this.init();
-	}
+    init() {
+      Event.$on(`close${this.name}`, () => {
+        this.close();
+      });
+      Event.$on(`open${this.name}`, () => {
+        this.open();
+      });
+    }
+  }
 };
 </script>
 

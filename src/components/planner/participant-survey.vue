@@ -1,41 +1,52 @@
 <template>
-	<details v-if="survey" class="survey">
-		<summary class="survey__header">
-			<i class="vds-icon vds-icon--blue vds-icon--expand_more"></i>
-			<i class="vds-icon vds-icon--blue vds-icon--expand_less"></i>
-			<strong>Reactie op enquête</strong>
-			<br />
-			{{survey.date}}
-		</summary>
-		<dl class="vds-definition-list survey__content">
-			<div v-for="question of survey.questions" :key="question.id">
-				<dt>{{question.question}}</dt>
-				<dd>
-					<ul v-if="question.answers && question.answers.length">
-						<li v-for="answer in question.answers" :key="answer">{{answer}}</li>
-					</ul>
-				</dd>
-				<div></div>
-			</div>
-		</dl>
-	</details>
+  <details
+    v-if="survey"
+    class="survey"
+  >
+    <summary class="survey__header">
+      <i class="vds-icon vds-icon--blue vds-icon--expand_more" />
+      <i class="vds-icon vds-icon--blue vds-icon--expand_less" />
+      <strong>Reactie op enquête</strong>
+      <br>
+      {{ survey.date }}
+    </summary>
+    <dl class="survey__content vds-definition-list">
+      <div
+        v-for="question of survey.questions"
+        :key="question.id"
+      >
+        <dt>{{ question.question }}</dt>
+        <dd>
+          <ul v-if="question.answers && question.answers.length">
+            <li
+              v-for="answer in question.answers"
+              :key="answer"
+            >
+              {{ answer }}
+            </li>
+          </ul>
+        </dd>
+        <div />
+      </div>
+    </dl>
+  </details>
 </template>
 
 <script>
 export default {
-	props: {
-		participantId: {
-			type: Number
-		}
-	},
+  props: {
+    participantId: {
+      type: Number
+    }
+  },
 
-	computed: {
-		survey() {
-			return this.$store.getters["participants/surveyById"](
-				this.participantId
-			);
-		}
-	}
+  computed: {
+    survey() {
+      return this.$store.getters["participants/surveyById"](
+        this.participantId
+      );
+    }
+  }
 };
 </script>
 

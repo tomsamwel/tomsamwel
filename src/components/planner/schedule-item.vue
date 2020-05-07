@@ -1,206 +1,209 @@
 <template>
-	<div
-		:id="id"
-		class="schedule-item draggable"
-		:class="{ selected: isSelected, dragged: isDragged }"
-		:style="sessionHeightStyles"
-		draggable="true"
-		@click="click"
-		@dragstart="dragstart"
-		@dragend.prevent="dragend"
-		@dragenter.prevent
-		@dragover.prevent
-		@drop.prevent
-	>
-		<div class="schedule-item__start-time" ref="time">
-			<!-- eg 09:30 -->
-		</div>
+  <div
+    :id="id"
+    class="draggable schedule-item"
+    :class="{selected: isSelected, dragged: isDragged}"
+    :style="sessionHeightStyles"
+    draggable="true"
+    @click="click"
+    @dragstart="dragstart"
+    @dragend.prevent="dragend"
+    @dragenter.prevent
+    @dragover.prevent
+    @drop.prevent
+  >
+    <div
+      ref="time"
+      class="schedule-item__start-time"
+    >
+      <!-- eg 09:30 -->
+    </div>
 
-		<div class="schedule-item__content">
-			<slot></slot>
-		</div>
-	</div>
+    <div class="schedule-item__content">
+      <slot />
+    </div>
+  </div>
 </template>
 
 <script>
 export default {
-	props: {
-		id: { type: [Number, String] },
+  props: {
+    id: { type: [Number, String] },
 
-		date: {
-			type: [String, Date]
-		},
+    date: {
+      type: [String, Date]
+    },
 
-		confirm: {
-			type: [Boolean, Number]
-		},
+    confirm: {
+      type: [Boolean, Number]
+    },
 
-		confirmText: {
-			type: String,
-			default() {
-				return "Are you sure?";
-			}
-		},
+    confirmText: {
+      type: String,
+      default() {
+        return "Are you sure?";
+      }
+    },
 
-		availability: {
-			type: Array,
-			default() {
-				return [
-					{ from: new Date(), to: new Date() },
+    availability: {
+      type: Array,
+      default() {
+        return [
+          { from: new Date(), to: new Date() },
 
-					{ from: new Date(), to: new Date() }
-				];
-			}
-		}
-	},
+          { from: new Date(), to: new Date() }
+        ];
+      }
+    }
+  },
 
-	data() {
-		return {
-			isSelected: false,
-			isDragged: false,
-			availableScheduleSlots: []
-		};
-	},
+  data() {
+    return {
+      isSelected: false,
+      isDragged: false,
+      availableScheduleSlots: []
+    };
+  },
 
-	computed: {
-		schedulePrecisionMinutes() {
-			return this.$store.getters["schedule/precisionMinutes"];
-		},
+  computed: {
+    schedulePrecisionMinutes() {
+      return this.$store.getters["schedule/precisionMinutes"];
+    },
 
-		sessionHeightStyles() {
-			return this.$store.getters["schedule/sessionHeightStyles"];
-		}
-	},
+    sessionHeightStyles() {
+      return this.$store.getters["schedule/sessionHeightStyles"];
+    }
+  },
 
-	methods: {
-		dragstart(ev) {
-			//remove dragged ghost image.. TODO : come up with a cleaner fix for this
-			var img = new Image();
-			img.src =
-				"data:image/gif;base64,R0lGODlhAQABAIAAAAUEBAAAACwAAAAAAQABAAACAkQBADs=";
-			ev.dataTransfer.setDragImage(
-				img,
-				window.outerWidth,
-				window.outerHeight
-			);
+  watch: {
+    date() {
+      this.scheduleSelf();
+    },
 
-			//push the dragged participant's id to the store
-			this.$store.dispatch("schedule/setDraggedElementId", this.id);
+    availability: {
+      deep: true,
+      immediate: true,
+      handler() {
+        this.getAvailableScheduleSlots();
+      }
+    }
+  },
 
-			//for some reason 1ms delay fixes a z-index issue here
-			// TODO : figure this part out
-			setTimeout(() => {
-				this.$store.dispatch("schedule/setIsDragging", true);
-			}, 1);
-			this.isDragged = true;
-		},
+  mounted() {
+    Event.$on("unselect", this.unselect);
+    if (this.date) this.scheduleSelf();
+  },
 
-		dragend(ev) {
-			if (this.confirm) {
-				confirm(this.confirmText)
-					? this.schedule(ev)
-					: this.scheduleSelf();
-			} else {
-				this.schedule(ev);
-			}
+  methods: {
+    dragstart(ev) {
+      //remove dragged ghost image.. TODO : come up with a cleaner fix for this
+      var img = new Image();
+      img.src =
+        "data:image/gif;base64,R0lGODlhAQABAIAAAAUEBAAAACwAAAAAAQABAAACAkQBADs=";
+      ev.dataTransfer.setDragImage(
+        img,
+        window.outerWidth,
+        window.outerHeight
+      );
 
-			this.$store.dispatch("schedule/setIsDragging", false);
-			this.isDragged = false;
-		},
+      //push the dragged participant's id to the store
+      this.$store.dispatch("schedule/setDraggedElementId", this.id);
 
-		click() {
-			this.isSelected ? this.unselect() : this.select();
-		},
+      //for some reason 1ms delay fixes a z-index issue here
+      // TODO : figure this part out
+      setTimeout(() => {
+        this.$store.dispatch("schedule/setIsDragging", true);
+      }, 1);
+      this.isDragged = true;
+    },
 
-		select() {
-			Event.$emit("unselect");
-			this.$emit("selected");
-			this.availableScheduleSlots.length
-				? this.showAvailability()
-				: this.getAvailableScheduleSlots();
-			this.isSelected = true;
-		},
+    dragend(ev) {
+      if (this.confirm) {
+        confirm(this.confirmText)
+          ? this.schedule(ev)
+          : this.scheduleSelf();
+      } else {
+        this.schedule(ev);
+      }
 
-		unselect() {
-			this.$emit("unselected");
-			this.hideAvailability();
+      this.$store.dispatch("schedule/setIsDragging", false);
+      this.isDragged = false;
+    },
 
-			this.isSelected = false;
-		},
+    click() {
+      this.isSelected ? this.unselect() : this.select();
+    },
 
-		schedule(ev) {
-			let newDate = ev.target.parentElement.id;
-			// let sqlDate = new Date(parseInt(newDate)).toSQLString();
-			this.$emit("scheduled", newDate);
+    select() {
+      Event.$emit("unselect");
+      this.$emit("selected");
+      this.availableScheduleSlots.length
+        ? this.showAvailability()
+        : this.getAvailableScheduleSlots();
+      this.isSelected = true;
+    },
 
-			Event.$emit("scheduling");
-		},
+    unselect() {
+      this.$emit("unselected");
+      this.hideAvailability();
 
-		scheduleSelf() {
-			if (this.date) {
-				let date = new Date(this.date);
-				let slot = document.getElementById(date.getTime());
-				if (slot && slot.classList.contains("dropzone")) {
-					this.$refs.time.innerHTML = slot.dataset.timehuman;
+      this.isSelected = false;
+    },
 
-					slot.appendChild(this.$el);
-				}
-			} else {
-				document.querySelector(".schedule-items").appendChild(this.$el);
-			}
+    schedule(ev) {
+      let newDate = ev.target.parentElement.id;
+      // let sqlDate = new Date(parseInt(newDate)).toSQLString();
+      this.$emit("scheduled", newDate);
 
-			Event.$emit("fixOverlapping");
-		},
+      Event.$emit("scheduling");
+    },
 
-		getAvailableScheduleSlots() {
-			this.availability.forEach(availability => {
-				// get each slot inbetween the from and to times
-				// increment by 5 minutes (5 * 60 * 1000 )
+    scheduleSelf() {
+      if (this.date) {
+        let date = new Date(this.date);
+        let slot = document.getElementById(date.getTime());
+        if (slot && slot.classList.contains("dropzone")) {
+          this.$refs.time.innerHTML = slot.dataset.timehuman;
 
-				for (
-					let slotId = availability.from;
-					slotId < availability.to;
-					slotId = slotId + this.schedulePrecisionMinutes * 60 * 1000
-				) {
-					let slot = document.getElementById(slotId);
-					if (slot) this.availableScheduleSlots.push(slot);
-				}
-			});
-			this.showAvailability();
-		},
+          slot.appendChild(this.$el);
+        }
+      } else {
+        document.querySelector(".schedule-items").appendChild(this.$el);
+      }
 
-		showAvailability() {
-			this.availableScheduleSlots.forEach(slot => {
-				slot.classList.add("available");
-			});
-		},
+      Event.$emit("fixOverlapping");
+    },
 
-		hideAvailability() {
-			if (!this.availableScheduleSlots.length) return;
-			this.availableScheduleSlots.forEach(slot => {
-				slot.classList.remove("available");
-			});
-		}
-	},
+    getAvailableScheduleSlots() {
+      this.availability.forEach(availability => {
+        // get each slot inbetween the from and to times
+        // increment by 5 minutes (5 * 60 * 1000 )
 
-	mounted() {
-		Event.$on("unselect", this.unselect);
-		if (this.date) this.scheduleSelf();
-	},
+        for (
+          let slotId = availability.from;
+          slotId < availability.to;
+          slotId = slotId + this.schedulePrecisionMinutes * 60 * 1000
+        ) {
+          let slot = document.getElementById(slotId);
+          if (slot) this.availableScheduleSlots.push(slot);
+        }
+      });
+      this.showAvailability();
+    },
 
-	watch: {
-		date() {
-			this.scheduleSelf();
-		},
+    showAvailability() {
+      this.availableScheduleSlots.forEach(slot => {
+        slot.classList.add("available");
+      });
+    },
 
-		availability: {
-			deep: true,
-			immediate: true,
-			handler() {
-				this.getAvailableScheduleSlots();
-			}
-		}
-	}
+    hideAvailability() {
+      if (!this.availableScheduleSlots.length) return;
+      this.availableScheduleSlots.forEach(slot => {
+        slot.classList.remove("available");
+      });
+    }
+  }
 };
 </script>
 

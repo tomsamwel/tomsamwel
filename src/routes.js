@@ -1,13 +1,17 @@
-import Home from "./components/home.vue";
-import TheProjects from "./components/the-projects.vue";
-import Planner from "./components/planner/the-planner.vue";
-import Contact from "./components/contact.vue";
+
+import TheAboutMe from "./components/tomsamwel/the-about-me.vue";
+import TheContact from "./components/tomsamwel/the-contact.vue";
+import TheProjects from "./components/tomsamwel/the-projects.vue";
+
+import ThePlanner from "./components/planner/the-planner.vue";
 
 const routes = [
+
+    { path: "/", component: TheAboutMe },
+    { path: "/contact", component: TheContact },
     { path: "/work", component: TheProjects },
-    { path: "/about", component: Home },
-    { path: "/contact", component: Contact },
-    { path: "/planner", component: Planner },
+    { path: "/planner", component: ThePlanner },
+    { path: '*', redirect: '/' }
 ];
 
 export default routes;

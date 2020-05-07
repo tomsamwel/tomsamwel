@@ -1,84 +1,94 @@
 <template>
-	<div class="popover" v-show="isVisible">
-		<div class="popover__header">
-			<div class="popover__title">
-				<slot name="title">Popopver</slot>
-			</div>
-			<div @click="close" class="popover__close">
-				<i class="vds-icon vds-icon--clear"></i>
-			</div>
-		</div>
+  <div
+    v-show="isVisible"
+    class="popover"
+  >
+    <div class="popover__header">
+      <div class="popover__title">
+        <slot name="title">
+          Popopver
+        </slot>
+      </div>
+      <div
+        class="popover__close"
+        @click="close"
+      >
+        <i class="vds-icon vds-icon--clear" />
+      </div>
+    </div>
 
-		<div class="popover__content">
-			<slot name="content">Popopver content</slot>
-		</div>
-	</div>
+    <div class="popover__content">
+      <slot name="content">
+        Popopver content
+      </slot>
+    </div>
+  </div>
 </template>
 
 <script>
 export default {
-	props: { name: String },
+  props: { name: String },
 
-	data() {
-		return {
-			isVisible: false,
-			triggers: []
-		};
-	},
+  data() {
+    return {
+      isVisible: false,
+      triggers: []
+    };
+  },
 
-	methods: {
-		open() {
-			this.isVisible = true;
-		},
+  mounted() {
+    this.initTriggers();
+  },
 
-		close() {
-			this.isVisible = false;
-		},
+  methods: {
+    open() {
+      this.isVisible = true;
+    },
 
-		initTriggers() {
-			// global event trigger
-			Event.$on("closePopovers", () => {
-				this.close();
-			});
+    close() {
+      this.isVisible = false;
+    },
 
-			// custom triggers
-			this.triggers = document.querySelectorAll(
-				`#${this.name}-trigger, .${this.name}-trigger`
-			);
-			this.triggers.forEach(trigger => {
-				trigger.addEventListener("click", ev => {
-					this.trigger(ev, trigger);
-				});
-			});
-		},
+    initTriggers() {
+      // global event trigger
+      Event.$on("closePopovers", () => {
+        this.close();
+      });
 
-		trigger(ev, triggerEl) {
-			if (!this.isVisible) {
-				Event.$emit("closePopovers");
-			}
-			this.isVisible = !this.isVisible;
+      // custom triggers
+      this.triggers = document.querySelectorAll(
+        `#${this.name}-trigger, .${this.name}-trigger`
+      );
+      this.triggers.forEach(trigger => {
+        trigger.addEventListener("click", ev => {
+          this.trigger(ev, trigger);
+        });
+      });
+    },
 
-			if (this.isVisible)
-				this.$nextTick(() => {
-					this.positionToElement(triggerEl);
-				});
-		},
+    trigger(ev, triggerEl) {
+      if (!this.isVisible) {
+        Event.$emit("closePopovers");
+      }
+      this.isVisible = !this.isVisible;
 
-		positionToElement(element) {
-			this.$el.style.marginTop =
-				element.offsetTop + element.offsetHeight + "px";
+      if (this.isVisible)
+        this.$nextTick(() => {
+          this.positionToElement(triggerEl);
+        });
+    },
 
-			this.$el.style.marginLeft =
-				element.offsetLeft +
-				element.offsetWidth -
-				this.$el.offsetWidth +
-				"px";
-		}
-	},
+    positionToElement(element) {
+      this.$el.style.marginTop =
+        element.offsetTop + element.offsetHeight + "px";
 
-	mounted() {
-		this.initTriggers();
-	}
+      this.$el.style.marginLeft =
+        element.offsetLeft +
+        element.offsetWidth -
+        this.$el.offsetWidth +
+        "px";
+    }
+  }
 };
 </script>
 

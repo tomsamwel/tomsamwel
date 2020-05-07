@@ -1,109 +1,109 @@
 <template>
-	<div class="new-message">
-		<div v-html="formHtml"></div>
-	</div>
+  <div class="new-message">
+    <div v-html="formHtml" />
+  </div>
 </template>
 
 <script>
 export default {
-	props: ["modal"],
+  props: ["modal"],
 
-	data() {
-		return {
-			participantId: 0,
-			formUrl: "",
-			formHtml: ""
-		};
-	},
+  data() {
+    return {
+      participantId: 0,
+      formUrl: "",
+      formHtml: ""
+    };
+  },
 
-	methods: {
-		openModal() {
-			Event.$emit(`open${this.modal}`);
-		},
+  watch: {
+    formHtml: function() {
+      this.$nextTick(() => {
+        this.initCloseButton();
+        this.initFormHandler();
+      });
+    }
+  },
 
-		closeModal() {
-			Event.$emit(`close${this.modal}`);
-		},
+  mounted() {
+    Event.$on("newMessage", participantId => {
+      this.participantId = participantId;
+      this.formUrl = `/deelnamereactie/add?deelname_id=${participantId}`;
 
-		init() {
-			fetch(this.formUrl)
-				.then(response => {
-					if (!response.ok) this.closeModal();
-					else
-						response.text().then(text => {
-							this.formHtml = text;
-							this.openModal();
-						});
-				})
-				.catch(error => {
-					console.error("Error:", error);
-					this.closeModal();
-				});
-		},
+      this.init();
+    });
 
-		initCloseButton() {
-			let closeButton = document.querySelector(
-				`#${this.modal} .js-dialog-close`
-			);
-			closeButton.addEventListener("click", () => {
-				this.closeModal();
-			});
-		},
+    Event.$on("newReply", payload => {
+      this.participantId = payload.participantId;
+      this.formUrl = `/deelnamereactie/${payload.messageId}/reply`;
 
-		initFormHandler() {
-			const form = document.querySelector(`#${this.modal} form`);
+      this.init();
+    });
 
-			form.addEventListener("submit", event => {
-				event.preventDefault();
+    Event.$on("newConfirmation", participantId => {
+      this.participantId = participantId;
+      this.formUrl = `/deelname/${participantId}/confirm`;
 
-				// Post data using the Fetch API
-				fetch(form.action, {
-					method: form.method,
-					body: new FormData(form)
-				})
-					.then(() => {
-						this.$store.dispatch("participants/fetchMessages", {
-							participantId: this.participantId
-						});
-					})
-					.catch(error => {
-						console.error("Error:", error);
-					});
-				this.closeModal();
-			});
-		}
-	},
+      this.init();
+    });
+  },
 
-	mounted() {
-		Event.$on("newMessage", participantId => {
-			this.participantId = participantId;
-			this.formUrl = `/deelnamereactie/add?deelname_id=${participantId}`;
+  methods: {
+    openModal() {
+      Event.$emit(`open${this.modal}`);
+    },
 
-			this.init();
-		});
+    closeModal() {
+      Event.$emit(`close${this.modal}`);
+    },
 
-		Event.$on("newReply", payload => {
-			this.participantId = payload.participantId;
-			this.formUrl = `/deelnamereactie/${payload.messageId}/reply`;
+    init() {
+      fetch(this.formUrl)
+        .then(response => {
+          if (!response.ok) this.closeModal();
+          else
+            response.text().then(text => {
+              this.formHtml = text;
+              this.openModal();
+            });
+        })
+        .catch(error => {
+          console.error("Error:", error);
+          this.closeModal();
+        });
+    },
 
-			this.init();
-		});
+    initCloseButton() {
+      let closeButton = document.querySelector(
+        `#${this.modal} .js-dialog-close`
+      );
+      closeButton.addEventListener("click", () => {
+        this.closeModal();
+      });
+    },
 
-		Event.$on("newConfirmation", participantId => {
-			this.participantId = participantId;
-			this.formUrl = `/deelname/${participantId}/confirm`;
+    initFormHandler() {
+      const form = document.querySelector(`#${this.modal} form`);
 
-			this.init();
-		});
-	},
+      form.addEventListener("submit", event => {
+        event.preventDefault();
 
-	watch: {
-		formHtml: function() {
-			this.$nextTick(() => {
-				this.initCloseButton();
-				this.initFormHandler();
-			});
-		}
-	}
+        // Post data using the Fetch API
+        fetch(form.action, {
+          method: form.method,
+          body: new FormData(form)
+        })
+          .then(() => {
+            this.$store.dispatch("participants/fetchMessages", {
+              participantId: this.participantId
+            });
+          })
+          .catch(error => {
+            console.error("Error:", error);
+          });
+        this.closeModal();
+      });
+    }
+  }
 };
 </script>

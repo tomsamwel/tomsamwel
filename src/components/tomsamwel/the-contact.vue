@@ -1,59 +1,64 @@
-<template>
-	<md-ripple>
-		<div class="socials">
-			<link
-				rel="stylesheet"
-				href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
-			/>
-
-			<button
-				v-for="(social, index) in socials"
-				:key="index"
-				@click="goto(social.link)"
-				class="rainbow-glow bubble"
-				:class="'delay-'+index"
-				type="button"
-			>
-				<i :class="social.icon"></i>
-				<md-tooltip md-direction="right">{{social.title}}</md-tooltip>
-			</button>
-		</div>
-	</md-ripple>
-</template>
-
 <script>
 export default {
-	data() {
-		return {
-			socials: [
-				{
-					title: "LinkedIn",
-					link: "https://www.linkedin.com/in/tom-samwel-62330b151/",
-					icon: "fa fa-linkedin"
-				},
-				{
-					title: "GitHub",
-					link: "https://github.com/tomsamwel",
-					icon: "fa fa-github"
-				},
-				{
-					title: "Facebook",
-					link:
-						"https://www.facebook.com/profile.php?id=100005337435218",
-					icon: "fa fa-facebook-f"
-				}
-			]
-		};
-	},
-	methods: {
-		goto(url) {
-			setTimeout(() => {
-				window.open(url, "_blank");
-			}, 400);
-		}
-	}
+  name: "TheContact",
+  data() {
+    return {
+      socials: [
+        {
+          title: "LinkedIn",
+          link: "https://www.linkedin.com/in/tom-samwel-62330b151/",
+          icon: "fa fa-linkedin"
+        },
+        {
+          title: "GitHub",
+          link: "https://github.com/tomsamwel",
+          icon: "fa fa-github"
+        },
+        {
+          title: "Facebook",
+          link:
+            "https://www.facebook.com/profile.php?id=100005337435218",
+          icon: "fa fa-facebook-f"
+        }
+      ]
+    };
+  },
+  methods: {
+    goto(url) {
+      setTimeout(() => {
+        window.open(url, "_blank");
+      }, 400);
+    }
+  }
 };
 </script>
+
+<template>
+  <md-ripple>
+    <div class="socials">
+      <link
+        rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
+      >
+
+      <button
+        v-for="(social, index) in socials"
+        :key="index"
+        class="bubble rainbow-glow"
+        :class="'delay-' + index"
+        type="button"
+        @click="goto(social.link)"
+      >
+        <i :class="social.icon" />
+        <md-tooltip md-direction="right">
+          {{ social.title }}
+        </md-tooltip>
+      </button>
+    </div>
+  </md-ripple>
+</template>
+
+
 
 <style lang="scss" >
 .socials {

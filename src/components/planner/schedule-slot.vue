@@ -1,42 +1,42 @@
 <template>
-	<div
-		class="slot"
-		:class="{ dropzone : isEnabled}"
-		:style="slotHeightStyles"
-		@dragenter.prevent="dragenter"
-		@dragover.prevent
-		@drop.prevent
-		:data-timehuman="timehuman"
-	></div>
+  <div
+    class="slot"
+    :class="{dropzone: isEnabled}"
+    :style="slotHeightStyles"
+    :data-timehuman="timehuman"
+    @dragenter.prevent="dragenter"
+    @dragover.prevent
+    @drop.prevent
+  />
 </template>
 
 <script>
 export default {
-	props: { timehuman: String, isEnabled: { type: Boolean, default: true } },
+  props: { timehuman: String, isEnabled: { type: Boolean, default: true } },
 
-	computed: {
-		slotHeightStyles() {
-			return this.$store.getters["schedule/slotHeightStyles"];
-		},
+  computed: {
+    slotHeightStyles() {
+      return this.$store.getters["schedule/slotHeightStyles"];
+    },
 
-		draggedElementId() {
-			return this.$store.getters["schedule/draggedElementId"];
-		},
+    draggedElementId() {
+      return this.$store.getters["schedule/draggedElementId"];
+    },
 
-		amountOfSlotsOccupied() {
-			return this.$store.getters["schedule/sessionLengthMinutes"] / 5;
-		}
-	},
+    amountOfSlotsOccupied() {
+      return this.$store.getters["schedule/sessionLengthMinutes"] / 5;
+    }
+  },
 
-	methods: {
-		dragenter() {
-			if (this.isEnabled) {
-				let draggedEl = document.getElementById(this.draggedElementId);
-				draggedEl.firstElementChild.innerHTML = this.timehuman;
-				this.$el.appendChild(draggedEl);
-			}
-		}
-	}
+  methods: {
+    dragenter() {
+      if (this.isEnabled) {
+        let draggedEl = document.getElementById(this.draggedElementId);
+        draggedEl.firstElementChild.innerHTML = this.timehuman;
+        this.$el.appendChild(draggedEl);
+      }
+    }
+  }
 };
 </script>
 
